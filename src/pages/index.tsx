@@ -1,15 +1,32 @@
 import Head from 'next/head'
-import Layout, {siteTitle} from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import {getSortedPostsData} from '../lib/posts'
 import Link from 'next/link'
+import {GetStaticProps} from 'next'
+import Layout, {siteTitle} from '../components/layout'
 import Date from '../components/date'
+import {getSortedPostsData} from '../lib/posts'
+import utilStyles from '../styles/utils.module.css'
 
-export default function Home({allPostsData}) {
+export default function Home({
+  allPostsData
+}: {
+  allPostsData: {
+    date: string
+    title: string
+    id: string
+  }[]
+}) {
   return (
     <Layout home>
-      <Head>…</Head>
-      <section className={utilStyles.headingMd}>…</section>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
+      <section className={utilStyles.headingMd}>
+        <p>hello! my name is mariano and i'm a software engineer :)</p>
+        <p>
+          this is a sample blog website i built following vercel's official
+          nextjs tutorial.
+        </p>
+      </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
@@ -30,9 +47,8 @@ export default function Home({allPostsData}) {
   )
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData()
-
   return {
     props: {
       allPostsData
